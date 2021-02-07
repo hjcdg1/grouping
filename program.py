@@ -1,8 +1,6 @@
 import random
 from collections import namedtuple
 
-
-
 # 프로그램 설명
 print('\n' + "=" * 130 + '\n' + '''
 본 프로그램이 정상적으로 작동하려면 다음 절차를 따라야 합니다.
@@ -47,12 +45,8 @@ priority_list = priority_input.strip().split()
 for i in range(0, len(priority_list)) :
     priority_list[i] = float(priority_list[i])
 
-
-
 # Person 클래스의 정의
 Person = namedtuple("Person", attrs_list)
-
-
 
 # 엑셀 내용 로드 ('data_general.txt'는 임원진을 제외한 단원들의 응답 결과지이다.)
 person_list = []
@@ -69,8 +63,6 @@ with open('data_general.txt', 'r') as f :
         person = Person(*args)
         person_list.append(person)
 random.shuffle(person_list)
-
-
 
 # 초기화
 K = int(input("몇 개의 조로 나눌 생각인가요? : "))
@@ -105,19 +97,18 @@ print(('\n' + "=" * 130 + '\n' + '''
 input("결과를 보시려면 아무 키나 입력하고 엔터를 치세요. \n\n>>> ")
 print("\n\n\n\n")
 
-
-
-# 함수 정의
 def distance(a, b) :
     d = 0.0
     for i in range(2, attrs_len) :
         d += (priority_list[i-2] * (a[i] - b[i])) ** 2
     return d
+
 def distance_list(person, center_list) :
     dist = []
     for i in range(0, K) :
         dist.append(distance(person, center_list[i]))
     return dist
+
 def find_center(group) :
     values = []
     for i in range(2, attrs_len) :
@@ -130,20 +121,20 @@ def find_center(group) :
         args_list.append(value)
     center = Person(*args_list)
     return center
+
 def check(old, new) :
     a = 0.0
     for i in range(0, K) :
         a += distance(old[i], new[i])
     a /= K
     return a < 0.0000000001
+
 def variance(group, center) :
     v = 0.0
     for person in group :
         v += distance(person, center)
     v /= len(group)
     return v
-
-
 
 # k개의 중심점 임의 선택
 number_list = list(range(0, K * S))
@@ -156,14 +147,10 @@ for i in range(0, K) :
     if person_list[number][1] == "남" :
         group_man_size[i] += 1
 
-
-
 # 모든 사람 각각에 대하여 중심점들과의 거리를 계산
 for person in person_list :
     dist_list = distance_list(person, center_list)
     person_dist_list.append(dist_list)
-
-
 
 # k개의 군집 구성
 for i, person in enumerate(person_list) :
@@ -185,12 +172,9 @@ for i, person in enumerate(person_list) :
     if person[1] == "남" :
         group_man_size[min_index] += 1
 
-
-
 # Iteration
 iter = 0
 while True :
-
     # center_list 수정
     old_center_list = list(center_list)
     for i in range(0, K) :
@@ -234,8 +218,6 @@ while True :
             group_man_size[min_index] += 1
 
     iter += 1
-
-
 
 # 결과 출력
 for i, group in enumerate(groups) :
