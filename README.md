@@ -1,4 +1,4 @@
-# 조 편성 프로그램 (Python)
+# 조 편성 프로그램
 
 ## 1. What is this service?
 
